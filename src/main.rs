@@ -21,6 +21,8 @@ fn main() {
         println!("Player 1 wins!")
     } else if outcome == -1 {
         println!("Player 2 wins!")
+    } else if outcome == 99 {
+        println!("Undecided!")
     }
     print_board(&board);
 }
@@ -84,6 +86,7 @@ fn get_win_condition(board: &Vec<Vec<i8>>) -> i8 {
 
     let win_player_1: Option<i8> = Some(3);
     let win_player_2: Option<i8> = Some(-3);
+    let board_full: bool = check_board_full(&board);
     if row_sum.iter().max() == win_player_1.as_ref() || col_sum.iter().max() == win_player_1.as_ref() {
         return 1
     }
@@ -95,7 +98,23 @@ fn get_win_condition(board: &Vec<Vec<i8>>) -> i8 {
     else if row_sum.iter().min() == win_player_2.as_ref() || col_sum.iter().min() == win_player_2.as_ref() {
         return -1
     }
+    else if board_full {
+        return 99
+    }
     else {
         return 0
     }
+}
+
+fn check_board_full(board: &Vec<Vec<i8>>) -> bool {
+    let mut board_full = true;
+    for row in board {
+        for col in row {
+            if *col == 0 {
+                board_full = false
+            }
+        }
+    }
+
+    return board_full;
 }
