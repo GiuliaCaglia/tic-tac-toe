@@ -1,6 +1,30 @@
 use std::io;
 
 fn main() {
+    let mut exit: bool = false;
+    let mut input = String::new();
+    let mut choice: char = '0';
+    let allowed_choices: Vec<char> = vec!['1', '2'];
+    while !exit {
+        while !allowed_choices.contains(&choice) {
+            println!("Welcome to tic-tac-toe!");
+            println!("1) Start Game");
+            println!("2) End Game");
+            let _ = io::stdin().read_line(&mut input);
+            choice = input.trim().to_string().parse().unwrap();
+        }
+        if choice == '1' {
+            game();
+            choice = '0';
+        }
+        else if choice == '2' {
+            exit = true;
+        }
+    }
+    println!("Goodbye!");
+}
+
+fn game() {
     // Create Board
     let mut board: Vec<Vec<i8>> = vec![vec![0; 3]; 3];
 
